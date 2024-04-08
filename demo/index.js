@@ -2,25 +2,20 @@
  * @Author: yeyu98
  * @Date: 2024-04-07 17:55:55
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-04-08 09:54:45
- * @FilePath: \babel-plugin\index.js
+ * @LastEditTime: 2024-04-08 09:57:21
+ * @FilePath: \babel-plugin\demo\index.js
  * @Description: 
  */
-/*
- * @Author: yeyu98
- * @Date: 2024-03-19 15:21:23
- * @LastEditors: yeyu98
- * @LastEditTime: 2024-04-08 09:07:47
- * @FilePath: \babel-plugin\index.js
- * @Description: 
- */
+const path = require('path')
 const parser = require('@babel/parser');
 const traverse = require('@babel/traverse').default;
 const generator = require('@babel/generator').default
 const t = require('@babel/types')
 const fs = require('fs')
 
-const code = fs.readFileSync('./base.js', 'utf8')
+const baseUrl = path.resolve(__dirname, 'base.js')
+
+const code = fs.readFileSync(baseUrl, 'utf8')
 const ast = parser.parse(code, {
   sourceType: 'module'
 })
@@ -91,6 +86,6 @@ traverse(ast, {
 // })
 
 const result = generator(ast, {}, code)
-fs.writeFile('./base.js', result.code, 'utf8', (err) => {
+fs.writeFile(baseUrl, result.code, 'utf8', (err) => {
   console.log(err)
 })
